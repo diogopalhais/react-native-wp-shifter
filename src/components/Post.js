@@ -7,7 +7,6 @@ moment.locale('pt')
 
 const Post = ({post,navigation}) => {
 
-    console.log(post)
     return (
         <View className="mb-4">
             <TouchableOpacity onPress={() => navigation.navigate('Post', { post: post })}>

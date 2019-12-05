@@ -16,7 +16,10 @@ export default Posts = () => {
   const { pages, loadMore, isLoadingMore, isReachingEnd } = useSWRPages(
     "posts",
     ({ offset, withSWR }) => {
-      const { data } = withSWR(useSWR("https://shifter.sapo.pt/wp-json/wp/v2/posts?page=" + (offset || 1), fetcher))
+
+
+      offset++
+      const { data } = withSWR(useSWR("https://shifter.sapo.pt/wp-json/wp/v2/posts?page=" + (offset || 0), fetcher))
 
       if (!data) {
         return <ActivityIndicator style={{ marginTop: 30 }} color='#f6b93b' />
@@ -28,7 +31,7 @@ export default Posts = () => {
 
     },
     (SWR, index) => {
-      if (SWR.data && SWR.data.length === 0) return null
+      // if (SWR.data && SWR.data.length === 0) return null
       return (index + 1)
     }
   )
