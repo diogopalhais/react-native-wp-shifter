@@ -8,6 +8,7 @@ import moment from 'moment'
 import 'moment/locale/pt'
 import HTMLView from 'react-native-htmlview'
 import SImage from 'react-native-scalable-image'
+import AutoHeightWebView from 'react-native-autoheight-webview'
 
 moment.locale('pt')
 
@@ -16,8 +17,13 @@ export default Post = ({ navigation }) => {
   const post = navigation.getParam('post', 'NO-POST')
 
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 1 }}>
       <View className="px-8 py-2">
+        <View style={{ marginBottom: 15, flexDirection: 'row' }}>
+          {post.categories.map(category => (
+            <Category key={category} category={category} />
+          ))}
+        </View>
         <Text style={{ marginBottom: 20 }} className='font-bold text-4xl text-grey-darkest'>
           {post.title.rendered}
         </Text>
@@ -48,26 +54,26 @@ export default Post = ({ navigation }) => {
         />
       </View>
 
-      <View className="px-8 mb-8">
-        <HTMLView
-          style={{ marginTop: 20 }}
-          value={post.content.rendered.replace(new RegExp('\n', 'g'), '')}
-          stylesheet={{
-            a: {
-              textDecorationLine: 'underline'
-            },
-            p: {
-              fontSize: 18,
-              textAlign: 'justify',
-              marginBottom: -10,
-              lineHeight: 26
-            },
-            b: {
-              fontWeight: 'bold'
-            }
-          }
-          }
+      <View>
+
+        <AutoHeightWebView
+          style={{ width: Dimensions.get('window').width - 60, marginLeft:30, marginTop:30 }}
+          files={[{
+            href: 'https://shifter.sapo.pt/wp-content/themes/presso/style.css?ver=3.2.1',
+            type: 'text/css',
+            rel: 'stylesheet'
+          },
+          {
+            href: 'https://shifter.sapo.pt/wp-content/themes/presso-child/style.css?ver=3.2.1',
+            type: 'text/css',
+            rel: 'stylesheet'
+          }]}
+          source={{ html: post.content.rendered.replace(new RegExp('\n', 'g'), '<br>') }}
+          scalesPageToFit={true}
+          allowsFullscreenVideo={true}
+          textZoom={340}
         />
+
       </View>
     </ScrollView>
   )

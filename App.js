@@ -16,8 +16,8 @@ const AppNavigator = createStackNavigator({
       },
       headerTitle: <SvgUri
         width={'100%'}
-        height={'70%'}
-        uri='https://shifter.sapo.pt/wp-content/uploads/2019/10/shifterlogo.svg'
+        height={'40%'}
+        uri='https://shifter.sapo.pt/wp-content/uploads/2019/12/shifter-preto.svg'
       />
     }),
   },
